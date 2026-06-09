@@ -86,7 +86,7 @@ const INITIAL_CONFIG: ProfileConfig = {
   linkedin: "https://www.linkedin.com/in/sanath-shetty09?utm_source=share_via&utm_content=profile&utm_medium=member_android",
   instagram: "https://www.instagram.com/sage_ofshadows?igsh=MXhyOTYxN3N5YXJ1bA==",
   avatar_emoji: "👨‍💻",
-  academic_year: "MCA'26",
+  academic_year: "MCA'27",
   profile_image_url: "/profile.jpg",
   accentColor: "cyan",
   themeMode: "cyber",
