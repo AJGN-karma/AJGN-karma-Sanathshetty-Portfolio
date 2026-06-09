@@ -1,4 +1,3 @@
-tudio: https://ai.studio/apps/9296faea-b02e-4fd2-b3eb-cb08d6f8bd9e
 
 ## Run Locally
 
