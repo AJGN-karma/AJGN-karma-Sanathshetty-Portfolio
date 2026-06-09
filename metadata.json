@@ -1,0 +1,6 @@
+{
+  "name": "Cybersecurity Portfolio Builder",
+  "description": "An interactive, highly polished cybersecurity and full-stack software developer portfolio workspace featuring customizable badges, retro diagnostic terminal, and trivia metrics.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
