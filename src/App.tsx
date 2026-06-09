@@ -63,12 +63,12 @@ export const THEME_COLORS: Record<string, { text: string; bg: string; border: st
   emerald: { text: "text-emerald-400", bg: "bg-emerald-500/10", border: "border-emerald-500/20", dot: "bg-emerald-500" },
   teal: { text: "text-teal-400", bg: "bg-teal-500/10", border: "border-teal-500/20", dot: "bg-teal-500" },
   cyan: { text: "text-cyan-400", bg: "bg-cyan-500/10", border: "border-cyan-500/20", dot: "bg-cyan-450" },
-  sky: { text: "text-sky-400", bg: "bg-sky-500/10", border: "border-sky-500/20", dot: "bg-sky-440" },
+  sky: { text: "text-sky-400", bg: "bg-sky-500/10", border: "border-sky-500/20", dot: "bg-sky-450" },
   blue: { text: "text-blue-400", bg: "bg-blue-500/10", border: "border-blue-500/20", dot: "bg-blue-500" },
   indigo: { text: "text-indigo-400", bg: "bg-indigo-500/10", border: "border-indigo-500/20", dot: "bg-indigo-500" },
   purple: { text: "text-purple-400", bg: "bg-purple-500/10", border: "border-purple-500/20", dot: "bg-purple-500" },
   violet: { text: "text-violet-400", bg: "bg-violet-500/10", border: "border-violet-500/20", dot: "bg-violet-500" },
-  slate: { text: "text-slate-400", bg: "bg-slate-500/10", border: "border-slate-500/20", dot: "bg-slate-440" },
+  slate: { text: "text-slate-400", bg: "bg-slate-500/10", border: "border-slate-500/20", dot: "bg-slate-400" },
 };
 
 export const getThemeColors = (themeName?: string) => {
@@ -264,6 +264,24 @@ export default function App() {
           theme: s.theme || DEFAULT_SKILL_THEMES[s.name] || "cyan"
         }));
       }
+      // Ensure missing or updated default projects from INITIAL_CONFIG (like Veritas) are injected
+      if (parsed.projects && Array.isArray(parsed.projects)) {
+        INITIAL_CONFIG.projects.forEach((initProj) => {
+          const existingIdx = parsed.projects.findIndex((p: any) => p.id === initProj.id);
+          if (existingIdx === -1) {
+            if (initProj.id === "proj-veritas") {
+              parsed.projects = [initProj, ...parsed.projects];
+            } else {
+              parsed.projects.push(initProj);
+            }
+          } else {
+            parsed.projects[existingIdx] = {
+              ...initProj,
+              ...parsed.projects[existingIdx]
+            };
+          }
+        });
+      }
       return parsed;
     }
     return INITIAL_CONFIG;
@@ -327,7 +345,7 @@ export default function App() {
       bg: "bg-pink-500",
       bgLight: "bg-pink-500/10",
       border: "border-pink-500/20",
-      borderFocus: "focus:border-pink-500",
+      borderFocus: "focus:border-pink-505",
       gradient: "from-pink-500 via-rose-400 to-purple-500",
       ring: "ring-pink-400",
       shadow: "shadow-pink-500/20",
@@ -337,7 +355,7 @@ export default function App() {
       bg: "bg-indigo-500",
       bgLight: "bg-indigo-500/10",
       border: "border-indigo-500/20",
-      borderFocus: "focus:border-indigo-500",
+      borderFocus: "focus:border-indigo-505",
       gradient: "from-indigo-500 via-purple-400 to-pink-500",
       ring: "ring-indigo-400",
       shadow: "shadow-indigo-500/20",
@@ -435,10 +453,10 @@ export default function App() {
 
           {/* Desktop Anchors */}
           <div className="hidden md:flex items-center gap-8 text-sm">
-            <a href="#about" className="text-gray-400 hover:text-white transition font-medium">About</a>
-            <a href="#skills" className="text-gray-400 hover:text-white transition font-medium">Technical Stack</a>
+            <a href="#about" className="text-gray-400 hover:text-white transition font-medium font-sans">About</a>
+            <a href="#skills" className="text-gray-400 hover:text-white transition font-medium font-sans">Technical Stack</a>
             <a href="#projects" className="text-gray-400 hover:text-white transition font-medium font-sans">Projects</a>
-            <a href="#certifications" className="text-gray-400 hover:text-white transition font-medium">Credentials</a>
+            <a href="#certifications" className="text-gray-400 hover:text-white transition font-medium font-sans">Credentials</a>
             <a href="#challenge" className="text-gray-400 hover:text-white transition font-medium flex items-center gap-1">
               <span>Security Hub</span>
               <span className="w-1.5 h-1.5 bg-rose-500 rounded-full animate-ping"></span>
@@ -650,7 +668,7 @@ export default function App() {
                 </div>
                 <div className="flex justify-between border-b border-gray-800/40 pb-2">
                   <span className="text-gray-400 font-medium">Kannada</span>
-                  <span className="text-white font-semibold">Native</span>
+                  <span className="text-white font-semibold flex items-center">Native</span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-gray-400 font-medium">Hindi</span>
@@ -685,7 +703,7 @@ export default function App() {
                     {edu.period}
                   </span>
 
-                  <div className="bg-[#0b1226]/80 border border-gray-800 p-5 rounded-xl space-y-1.5 hover:border-gray-700 transition">
+                  <div className="bg-[#0b1226]/80 border border-gray-800 p-5 rounded-xl space-y-1.5 hover:border-gray-750 transition">
                     <span className="md:hidden block text-xs font-mono text-cyan-400 font-bold">{edu.period}</span>
                     <h4 className="font-bold text-white text-base">{edu.degree}</h4>
                     <p className="text-sm text-gray-400">{edu.institution}</p>
@@ -701,14 +719,14 @@ export default function App() {
       {/* INTENSITY PROGRESS MATRIX (SKILLS) */}
       <section id="skills" className="py-20 px-6 max-w-6xl mx-auto space-y-12">
         <div className="border-l-2 border-cyan-500 pl-4">
-          <span className="text-xs font-mono text-cyan-400 uppercase tracking-widest">Matrix Diagnostics</span>
+          <span className="text-xs font-mono text-cyan-400 uppercase tracking-widest font-bold">Matrix Diagnostics</span>
           <h3 className="text-3xl font-bold font-sans text-white mt-1">Skills Arsenal</h3>
         </div>
 
         <div className="space-y-8">
           {/* Cyber stack list */}
           <div className="bg-[#0b1226]/60 border border-gray-800 p-6 rounded-2xl space-y-4 hover:border-gray-700 transition-all">
-            <h4 className="text-xs font-mono font-bold text-rose-450 uppercase tracking-widest flex items-center gap-2 border-b border-gray-800/60 pb-3">
+            <h4 className="text-xs font-mono font-bold text-rose-400 uppercase tracking-widest flex items-center gap-2 border-b border-gray-800/60 pb-3">
               <Lock className="w-4 h-4 text-rose-400" />
               <span>Cybersecurity Stack</span>
             </h4>
@@ -961,7 +979,7 @@ export default function App() {
 
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {config.achievements.map((ach) => (
-              <div key={ach.id} className="bg-[#0b1226]/80 border border-gray-800 p-5 rounded-2xl space-y-3 hover:border-gray-700 transition">
+              <div key={ach.id} className="bg-[#0b1226]/80 border border-gray-800 p-5 rounded-2xl space-y-3 hover:border-gray-750 transition">
                 <span className="text-2xl block select-none">{ach.emoji}</span>
                 <div>
                   <h4 className="font-bold text-[#e2e8f0] text-sm leading-snug">{ach.title}</h4>
@@ -1102,7 +1120,7 @@ export default function App() {
 
           {/* Card right: Links and contact info */}
           <div className="space-y-6">
-            <h4 className="font-bold text-white text-base font-sans">Send me a Message</h4>
+            <h4 className="font-bold text-white text-base font-sans">Links & Coordinates</h4>
             
             <div className="space-y-3">
               <a 
@@ -1216,10 +1234,10 @@ export default function App() {
               </div>
 
               <h4 className="text-xl font-bold text-white font-sans">{selectedProject.title}</h4>
-              <p className="text-xs text-cyan-400 font-mono mt-1 uppercase tracking-widest">Blueprint Specifications</p>
+              <p className="text-xs text-cyan-400 font-mono mt-1 uppercase tracking-widest">Blueprint Specs</p>
 
               <div className="space-y-4 mt-4">
-                <p className="text-xs text-gray-400 leading-relaxed font-sans">
+                <p className="text-xs text-gray-400 leading-relaxed font-sans font-normal">
                   {selectedProject.description}
                 </p>
 
