@@ -63,12 +63,12 @@ export const THEME_COLORS: Record<string, { text: string; bg: string; border: st
   emerald: { text: "text-emerald-400", bg: "bg-emerald-500/10", border: "border-emerald-500/20", dot: "bg-emerald-500" },
   teal: { text: "text-teal-400", bg: "bg-teal-500/10", border: "border-teal-500/20", dot: "bg-teal-500" },
   cyan: { text: "text-cyan-400", bg: "bg-cyan-500/10", border: "border-cyan-500/20", dot: "bg-cyan-450" },
-  sky: { text: "text-sky-400", bg: "bg-sky-500/10", border: "border-sky-500/20", dot: "bg-sky-450" },
+  sky: { text: "text-sky-400", bg: "bg-sky-500/10", border: "border-sky-500/20", dot: "bg-sky-440" },
   blue: { text: "text-blue-400", bg: "bg-blue-500/10", border: "border-blue-500/20", dot: "bg-blue-500" },
   indigo: { text: "text-indigo-400", bg: "bg-indigo-500/10", border: "border-indigo-500/20", dot: "bg-indigo-500" },
   purple: { text: "text-purple-400", bg: "bg-purple-500/10", border: "border-purple-500/20", dot: "bg-purple-500" },
   violet: { text: "text-violet-400", bg: "bg-violet-500/10", border: "border-violet-500/20", dot: "bg-violet-500" },
-  slate: { text: "text-slate-400", bg: "bg-slate-500/10", border: "border-slate-500/20", dot: "bg-slate-400" },
+  slate: { text: "text-slate-400", bg: "bg-slate-500/10", border: "border-slate-500/20", dot: "bg-slate-440" },
 };
 
 export const getThemeColors = (themeName?: string) => {
@@ -86,7 +86,7 @@ const INITIAL_CONFIG: ProfileConfig = {
   linkedin: "https://www.linkedin.com/in/sanath-shetty09?utm_source=share_via&utm_content=profile&utm_medium=member_android",
   instagram: "https://www.instagram.com/sage_ofshadows?igsh=MXhyOTYxN3N5YXJ1bA==",
   avatar_emoji: "👨‍💻",
-  academic_year: "MCA'27",
+  academic_year: "MCA'26",
   profile_image_url: "/profile.jpg",
   accentColor: "cyan",
   themeMode: "cyber",
@@ -117,6 +117,20 @@ const INITIAL_CONFIG: ProfileConfig = {
     { id: "edu-4", period: "2018 — 2019", degree: "Secondary School Certificate (10th)", institution: "Sacred Heart High School, Madanthyar", extra: "Percentage Grade: 74.56%" }
   ] as any[],
   projects: [
+    {
+      id: "proj-veritas",
+      title: "Veritas",
+      description: "An AI-powered full-stack real-time news evaluation and fact-checking dashboard. Spot misinformation, analyze political claims, and evaluate risks instantly using Google Gemini, dynamic routing, and intelligent offline failovers.",
+      category: "web",
+      tags: ["Gemini AI", "React", "Node.js", "Tailwind CSS", "Real-Time"],
+      icon: "⚖️",
+      learnings: [
+        "Integrated Google Gemini API to analyze news payloads and estimate risks of misinformation in real-time.",
+        "Engineered high-performance dynamic routing with intelligent state caching and offline failovers."
+      ],
+      stars: 87,
+      liveUrl: "https://veritas-iota-steel.vercel.app/"
+    },
     {
       id: "proj-1",
       title: "Intrusion Detection System",
@@ -239,7 +253,7 @@ export default function App() {
       if (parsed.contact_email === "sanathshetty903@gmail.com") {
         return INITIAL_CONFIG;
       }
-      if (!parsed.instagram || !parsed.projects || parsed.projects.length > 2) {
+      if (!parsed.instagram || !parsed.projects || parsed.projects.length > 10) {
         return INITIAL_CONFIG;
       }
       // Guarantee skills have fallback emojis & themes
@@ -859,16 +873,29 @@ export default function App() {
                 </div>
 
                 {/* Simulated Git footer controls */}
-                <div className="px-6 py-4 bg-[#0a1020]/25 border-t border-slate-900/40 flex justify-between items-center text-xs text-gray-500 font-mono">
-                  <span className="text-gray-600 font-mono text-[10px]">VERIFIED SANDBOX MODULE</span>
+                <div className="px-6 py-4 bg-[#0a1020]/25 border-t border-slate-900/40 flex justify-between items-center text-xs text-gray-500 font-mono gap-4">
+                  <span className="text-gray-600 font-mono text-[10px] truncate">VERIFIED SANDBOX MODULE</span>
                   
-                  <button
-                    onClick={() => setSelectedProject(proj)}
-                    className="text-cyan-400 hover:underline flex items-center gap-1 font-semibold hover:text-cyan-300 font-sans"
-                  >
-                    <span>View Blueprint Details</span>
-                    <ArrowUpRight className="w-3.5 h-3.5" />
-                  </button>
+                  <div className="flex items-center gap-3.5 shrink-0">
+                    {proj.liveUrl && (
+                      <a
+                        href={proj.liveUrl}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="text-emerald-400 hover:underline flex items-center gap-1 font-semibold hover:text-emerald-300 font-sans"
+                      >
+                        <span>Visit Live</span>
+                        <ExternalLink className="w-3.5 h-3.5" />
+                      </a>
+                    )}
+                    <button
+                      onClick={() => setSelectedProject(proj)}
+                      className="text-cyan-400 hover:underline flex items-center gap-1 font-semibold hover:text-cyan-300 font-sans"
+                    >
+                      <span>View Blueprint Details</span>
+                      <ArrowUpRight className="w-3.5 h-3.5" />
+                    </button>
+                  </div>
                 </div>
               </motion.div>
             ))}
@@ -1189,7 +1216,7 @@ export default function App() {
               </div>
 
               <h4 className="text-xl font-bold text-white font-sans">{selectedProject.title}</h4>
-              <p className="text-xs text-cyan-400 font-mono mt-1 uppercase tracking-widest">Blueprint Blueprint Specifications</p>
+              <p className="text-xs text-cyan-400 font-mono mt-1 uppercase tracking-widest">Blueprint Specifications</p>
 
               <div className="space-y-4 mt-4">
                 <p className="text-xs text-gray-400 leading-relaxed font-sans">
@@ -1221,12 +1248,25 @@ export default function App() {
                     <span className="font-bold font-mono">{selectedProject.stars} GitHub validation references</span>
                   </span>
                   
-                  <button
-                    onClick={() => setSelectedProject(null)}
-                    className="bg-slate-800 hover:bg-slate-700 text-white font-semibold px-4 py-2 rounded-xl transition font-sans"
-                  >
-                    Close Blueprint
-                  </button>
+                  <div className="flex items-center gap-2">
+                    {selectedProject.liveUrl && (
+                      <a
+                        href={selectedProject.liveUrl}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="bg-emerald-500 hover:bg-emerald-600 text-white font-semibold px-4 py-2 rounded-xl transition font-sans flex items-center gap-1.5"
+                      >
+                        <span>Visit Site</span>
+                        <ExternalLink className="w-3.5 h-3.5" />
+                      </a>
+                    )}
+                    <button
+                      onClick={() => setSelectedProject(null)}
+                      className="bg-slate-800 hover:bg-slate-700 text-white font-semibold px-4 py-2 rounded-xl transition font-sans"
+                    >
+                      Close Blueprint
+                    </button>
+                  </div>
                 </div>
               </div>
             </motion.div>
