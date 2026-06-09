@@ -23,6 +23,7 @@ export interface Project {
   icon: string;
   learnings: string[];
   stars: number;
+  liveUrl?: string;
 }
 
 export interface Certification {
